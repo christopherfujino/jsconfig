@@ -13,4 +13,5 @@ let rec print_expr e = match e with
   | String s -> "\"" ^ s ^ "\""
   | Number n -> string_of_float n
 
-let () = print_endline (print_expr (parse program))
+(* |> is reverse application, avoiding nesting of function invocations *)
+let () = program |> parse |> print_expr |> print_endline
