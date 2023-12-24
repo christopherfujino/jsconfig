@@ -1,0 +1,7 @@
+(library
+ (name jsconfig))
+
+(menhir
+ (modules parser))
+
+(ocamllex lexer)
