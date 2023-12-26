@@ -31,6 +31,7 @@
 
 doc:
   | o = obj; EOF { o }
+  ;
 
 value:
   | n = NUM { Number n }
@@ -43,7 +44,16 @@ value:
   ;
 
 obj:
-  | OPEN_CURLY; k = STRING; COLON; v = value; CLOSE_CURLY; EOF { Object (k, v) }
+  | OPEN_CURLY; entries = obj_entries; CLOSE_CURLY { Object entries }
+  ;
+
+obj_entries:
+  | e = obj_entry { [e] }
+  | l = obj_entries ; COMMA ; e = obj_entry { l @ [e] }
+  ;
+
+obj_entry:
+  | k = STRING; COLON; v = value; { (k, v) }
   ;
 
 arr:

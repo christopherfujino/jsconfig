@@ -7,15 +7,22 @@ let programs =
     {|{"nested array": [[], [1], ["a"]]}|};
     {|{"null": null}|};
     {|{"booleans": [true, false]}|};
-    {|{"multiple": null, "fields": null}|}
+    {|{"multiple": null, "fields": null}|};
   ]
 
 let rec print_list l =
   match l with [] -> "" | h :: t -> print_expr h ^ ", " ^ print_list t
 
+and print_obj_entry (k, v) = k ^ ": " ^ print_expr v
+
+and print_obj_entries es =
+  match es with
+  | [] -> ""
+  | h :: t -> print_obj_entry h ^ ", " ^ print_obj_entries t
+
 and print_expr e =
   match e with
-  | Object (k, v) -> "{\"" ^ k ^ "\": " ^ print_expr v ^ "}"
+  | Object o -> "{" ^ print_obj_entries o ^ "}"
   | Array a -> ( match a with [] -> "[]" | l -> "[" ^ print_list l ^ "]")
   | String s -> "\"" ^ s ^ "\""
   (* TODO handle ints nicely *)
@@ -26,10 +33,12 @@ and print_expr e =
 
 let rec print_programs = function
   | [] -> ()
-  | h :: t ->
-      try let value = parse h in
-      (* |> is reverse application, avoiding nesting of function invocations *)
-      print_expr value |> print_endline;
-      print_programs t with Jsconfig.Parser.Error -> failwith h
+  | h :: t -> (
+      try
+        let value = parse h in
+        (* |> is reverse application, avoiding nesting of function invocations *)
+        print_expr value |> print_endline;
+        print_programs t
+      with Jsconfig.Parser.Error -> failwith h)
 
 let () = print_programs programs
