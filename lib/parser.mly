@@ -65,3 +65,4 @@ value_list:
   | v = value                          { [v] }
     (* h @ [v] concatenates h and v *)
   | h = value_list ; COMMA ; v = value { h @ [v] }
+  ;
