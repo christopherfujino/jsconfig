@@ -5,3 +5,5 @@ type value =
   | Number of float
   | String of string
   | Null
+  | True
+  | False

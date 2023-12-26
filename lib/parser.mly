@@ -16,6 +16,8 @@
 %token COLON
 %token EOF
 %token NULL
+%token TRUE
+%token FALSE
 
 (* Precedence & Associativity *)
 
@@ -36,6 +38,8 @@ value:
   | o = obj { o }
   | a = arr { a }
   | NULL { Null }
+  | TRUE { True }
+  | FALSE { False }
   ;
 
 obj:

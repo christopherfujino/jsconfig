@@ -26,6 +26,8 @@ rule read =
   | '"'       { read_string (Buffer.create 17) lexbuf }
   | ','       { COMMA }
   | "null"    { NULL }
+  | "true"    { TRUE }
+  | "false"   { FALSE }
   (* Here `eof` is a special regex built into ocamllex *)
   | eof       { EOF }
   | _ as c { failwith (Printf.sprintf "unexpected character: %C" c) }

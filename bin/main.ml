@@ -6,6 +6,8 @@ let programs =
     {|{"array": [1,2,3]}|};
     {|{"nested array": [[], [1], ["a"]]}|};
     {|{"null": null}|};
+    {|{"booleans": [true, false]}|};
+    {|{"multiple": null, "fields": null}|}
   ]
 
 let rec print_list l =
@@ -19,6 +21,8 @@ and print_expr e =
   (* TODO handle ints nicely *)
   | Number n -> string_of_float n
   | Null -> "null"
+  | True -> "true"
+  | False -> "false"
 
 let rec print_programs = function
   | [] -> ()
