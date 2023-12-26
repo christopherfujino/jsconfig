@@ -8,7 +8,13 @@ let programs =
     {|{"null": null}|};
     {|{"booleans": [true, false]}|};
     {|{"multiple": null, "fields": null}|};
-    {|{"nested": {"object": [[]]}}|};
+    {|{
+  "nested": {
+    "object": [
+      []
+    ]
+  }
+}|};
   ]
 
 let rec print_list l =
