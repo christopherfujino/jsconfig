@@ -33,8 +33,19 @@ value:
   | n = NUM { Number n }
   | s = STRING { String s }
   | o = obj { o }
+  | a = arr { a }
   ;
 
 obj:
   | OPEN_CURLY; k = STRING; COLON; v = value; CLOSE_CURLY; EOF { Object (k, v) }
   ;
+
+arr:
+  | OPEN_BRACKET ; e = value_list ; CLOSE_BRACKET { Array e }
+  ;
+
+value_list:
+  | (* empty *)                        { [] }
+  | v = value                          { [v] }
+    (* h @ [v] concatenates h and v *)
+  | h = value_list ; COMMA ; v = value { h @ [v] }

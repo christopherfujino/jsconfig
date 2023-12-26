@@ -16,7 +16,9 @@ rule read =
   (* means if `white` matches, call the read rule again and return its
      results--i.e. skip this match *)
   | white     { read lexbuf }
-  | ","       { COMMA }
+  | ','       { COMMA }
+  | '['       { OPEN_BRACKET }
+  | ']'       { CLOSE_BRACKET }
   | "{"       { OPEN_CURLY }
   | "}"       { CLOSE_CURLY }
   | ":"       { COLON }
@@ -41,5 +43,5 @@ and read_string buf =
     { Buffer.add_string buf (Lexing.lexeme lexbuf);
       read_string buf lexbuf
     }
+  | eof { raise (SyntaxError "String is not terminated") }
   | _ { raise (SyntaxError ("Illegal string character: " ^ Lexing.lexeme lexbuf)) }
-  | eof { raise (SyntaxError ("String is not terminated")) }
