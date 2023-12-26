@@ -15,6 +15,7 @@
 %token COMMA
 %token COLON
 %token EOF
+%token NULL
 
 (* Precedence & Associativity *)
 
@@ -34,6 +35,7 @@ value:
   | s = STRING { String s }
   | o = obj { o }
   | a = arr { a }
+  | NULL { Null }
   ;
 
 obj:

@@ -4,3 +4,4 @@ type value =
   | Array of value list
   | Number of float
   | String of string
+  | Null

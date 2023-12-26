@@ -19,12 +19,13 @@ rule read =
   | ','       { COMMA }
   | '['       { OPEN_BRACKET }
   | ']'       { CLOSE_BRACKET }
-  | "{"       { OPEN_CURLY }
-  | "}"       { CLOSE_CURLY }
-  | ":"       { COLON }
+  | '{'       { OPEN_CURLY }
+  | '}'       { CLOSE_CURLY }
+  | ':'       { COLON }
   | number    { NUM (float_of_string (Lexing.lexeme lexbuf))}
   | '"'       { read_string (Buffer.create 17) lexbuf }
   | ','       { COMMA }
+  | "null"    { NULL }
   (* Here `eof` is a special regex built into ocamllex *)
   | eof       { EOF }
   | _ as c { failwith (Printf.sprintf "unexpected character: %C" c) }
