@@ -27,9 +27,9 @@ and print_expr e =
 let rec print_programs = function
   | [] -> ()
   | h :: t ->
+      try let value = parse h in
       (* |> is reverse application, avoiding nesting of function invocations *)
-      let value = parse h in
       print_expr value |> print_endline;
-      print_programs t
+      print_programs t with Jsconfig.Parser.Error -> failwith h
 
 let () = print_programs programs
