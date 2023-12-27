@@ -9,6 +9,7 @@ exception SyntaxError of string
 let white = [' ' '\t' '\n']
 let digit = ['0'-'9']
 let number = '-'? digit+ ('.' digit+)?
+let comment = "//" [^ '\n']+
 
 (* rule and parse are keywords *)
 rule read =
@@ -16,6 +17,7 @@ rule read =
   (* means if `white` matches, call the read rule again and return its
      results--i.e. skip this match *)
   | white     { read lexbuf }
+  | comment   { read lexbuf }
   | ','       { COMMA }
   | '['       { OPEN_BRACKET }
   | ']'       { CLOSE_BRACKET }

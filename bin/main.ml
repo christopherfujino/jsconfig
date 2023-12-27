@@ -22,17 +22,35 @@ let programs =
     null,
     null,
   ],
-}|}
+}|};
+    {|{"commas": // From here to newline is omitted
+  null,
+}|};
+    {|
+// Has comments
+{
+  "key": [
+    "also",
+    "has",
+    "trailing",
+    "commas",
+  ],
+}
+|};
+    {|{"unicode": "世界"}|}
   ]
 
-let rec print_list l =
-  match l with [] -> "" | h :: t -> print_expr h ^ ", " ^ print_list t
+let rec print_list = function
+  | [] -> ""
+  | h :: [] -> print_expr h
+  | h :: t -> print_expr h ^ ", " ^ print_list t
 
 and print_obj_entry (k, v) = "\"" ^ k ^ "\": " ^ print_expr v
 
 and print_obj_entries es =
   match es with
   | [] -> ""
+  | h :: [] -> print_obj_entry h
   | h :: t -> print_obj_entry h ^ ", " ^ print_obj_entries t
 
 and print_expr e =
