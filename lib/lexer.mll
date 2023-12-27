@@ -6,9 +6,9 @@ exception SyntaxError of string
 }
 
 (* identifiers *)
-let white = [' ' '\t' '\n']
+let white = [' ' '\t' '\n' '\r']
 let digit = ['0'-'9']
-let number = '-'? digit+ ('.' digit+)?
+let number = '-'? ((['1'-'9'] digit*) | '0') ('.' digit+)? (['e' 'E'] ('-'|'+')? digit+)?
 let comment = "//" [^ '\n']+
 
 (* rule and parse are keywords *)
@@ -24,6 +24,7 @@ rule read =
   | '{'       { OPEN_CURLY }
   | '}'       { CLOSE_CURLY }
   | ':'       { COLON }
+  (* TODO should we store the actual input string in case of scientific notation? *)
   | number    { NUM (float_of_string (Lexing.lexeme lexbuf))}
   | '"'       { read_string (Buffer.create 17) lexbuf }
   | ','       { COMMA }

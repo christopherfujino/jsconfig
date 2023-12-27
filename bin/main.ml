@@ -9,6 +9,7 @@ let programs =
     {|{"null": null}|};
     {|{"booleans": [true, false]}|};
     {|{"multiple": null, "fields": null}|};
+    {|{"scientific": 0.1e-10}|} ;
     {|{
   "nested": {
     "object": [
