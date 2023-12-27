@@ -8,7 +8,7 @@ exception SyntaxError of string
 (* identifiers *)
 let white = [' ' '\t' '\n']
 let digit = ['0'-'9']
-let number = '-'? digit+
+let number = '-'? digit+ ('.' digit+)?
 
 (* rule and parse are keywords *)
 rule read =

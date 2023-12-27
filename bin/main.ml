@@ -4,6 +4,7 @@ open Jsconfig.Main
 let programs =
   [
     {|{"array": [1,2,3]}|};
+    {|{"float": 1.1}|};
     {|{"nested array": [[], [1], ["a"]]}|};
     {|{"null": null}|};
     {|{"booleans": [true, false]}|};
