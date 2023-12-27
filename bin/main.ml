@@ -16,6 +16,13 @@ let programs =
     ]
   }
 }|};
+    {|{
+  "trailing commas": [
+    null,
+    null,
+    null,
+  ],
+}|}
   ]
 
 let rec print_list l =

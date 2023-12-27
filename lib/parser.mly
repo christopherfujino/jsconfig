@@ -45,6 +45,7 @@ value:
 
 obj:
   | OPEN_CURLY; entries = obj_entries; CLOSE_CURLY { Object entries }
+  | OPEN_CURLY; entries = obj_entries; COMMA; CLOSE_CURLY { Object entries }
   ;
 
 obj_entries:
@@ -58,6 +59,7 @@ obj_entry:
 
 arr:
   | OPEN_BRACKET ; e = value_list ; CLOSE_BRACKET { Array e }
+  | OPEN_BRACKET ; e = value_list ; COMMA; CLOSE_BRACKET { Array e }
   ;
 
 value_list:
