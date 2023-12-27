@@ -38,7 +38,9 @@ let programs =
   ],
 }
 |};
-    {|{"unicode": "世界"}|}
+    {|{"unicode": "世界"}|};
+    {|{"handles": "escapes\nin\nstrings"}|};
+    {|{"escape unicode": "15\u00f8C"}|}
   ]
 
 let rec print_list = function
@@ -58,6 +60,7 @@ and print_expr e =
   match e with
   | Object o -> "{" ^ print_obj_entries o ^ "}"
   | Array a -> ( match a with [] -> "[]" | l -> "[" ^ print_list l ^ "]")
+  (* TODO add back escapes *)
   | String s -> "\"" ^ s ^ "\""
   | Number n -> (
       match n with

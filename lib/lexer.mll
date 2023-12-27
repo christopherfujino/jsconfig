@@ -10,6 +10,7 @@ let white = [' ' '\t' '\n' '\r']
 let digit = ['0'-'9']
 let number = '-'? ((['1'-'9'] digit*) | '0') ('.' digit+)? (['e' 'E'] ('-'|'+')? digit+)?
 let comment = "//" [^ '\n']+
+let hex = ['0'-'9' 'a'-'f' 'A'-'F']
 
 (* rule and parse are keywords *)
 rule read =
@@ -45,6 +46,13 @@ and read_string buf =
   | '\\' 'n'  { Buffer.add_char buf '\n'; read_string buf lexbuf }
   | '\\' 'r'  { Buffer.add_char buf '\r'; read_string buf lexbuf }
   | '\\' 't'  { Buffer.add_char buf '\t'; read_string buf lexbuf }
+  | '\\' 'u' hex hex hex hex
+    {
+      (* TODO to make a valid ocaml utf-8 string, I think we'd need to
+       * manipulate bytes *)
+      Buffer.add_string buf (Lexing.lexeme lexbuf);
+      read_string buf lexbuf
+    }
   | [^ '"' '\\']+
     { Buffer.add_string buf (Lexing.lexeme lexbuf);
       read_string buf lexbuf
