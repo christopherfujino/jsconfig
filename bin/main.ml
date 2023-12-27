@@ -20,7 +20,7 @@ let programs =
 let rec print_list l =
   match l with [] -> "" | h :: t -> print_expr h ^ ", " ^ print_list t
 
-and print_obj_entry (k, v) = k ^ ": " ^ print_expr v
+and print_obj_entry (k, v) = "\"" ^ k ^ "\": " ^ print_expr v
 
 and print_obj_entries es =
   match es with
@@ -32,8 +32,10 @@ and print_expr e =
   | Object o -> "{" ^ print_obj_entries o ^ "}"
   | Array a -> ( match a with [] -> "[]" | l -> "[" ^ print_list l ^ "]")
   | String s -> "\"" ^ s ^ "\""
-  (* TODO handle ints nicely *)
-  | Number n -> string_of_float n
+  | Number n -> (
+      match n with
+      | n' when Float.is_integer n' -> string_of_int (int_of_float n')
+      | _ -> string_of_float n)
   | Null -> "null"
   | True -> "true"
   | False -> "false"
